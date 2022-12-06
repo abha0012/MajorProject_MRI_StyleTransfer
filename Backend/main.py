@@ -39,15 +39,13 @@ def load_image(path, filename, size=(256,256)):
 
 # Define normalization function - Normalizing data in the range [-1.0, 1.0]
 normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(scale = 1./127.5, offset =-1.0)
-
 # Define resizing function
 resize_layer = tf.keras.layers.experimental.preprocessing.Resizing(128, 128, interpolation='bilinear')
-
 #Reshape
 reshape_layer = tf.keras.layers.Reshape((128,128,1))
 
 def generate_images_T1(model1, test_input1,filename):
-    '''Main function for generating predicted MRI'''
+    '''Main function for generating predicted MRI for T1'''
     prediction1 = model1(test_input1)
     # prediction2 = model2(test_input2)
     plt.figure(figsize=(4, 4))
@@ -69,19 +67,8 @@ def upload_form():
     '''Route to original landing/home page'''
     return render_template('upload.html')
 
-# @app.route('/mri')
-# def console():
-#     print("Hitting thissssssssssssssssssssssssssssss")
-#     return
-
 @app.route('/mri', methods=['POST'])
 def upload_image():
-    # content_type = request.headers.get('Content-Type')
-    # if (content_type == 'application/x-www-form-urlencoded'):
-    #     json = request.form["MRI_"]
-    #     print("JSON?!?!?!?!?!?!: ", json)
-    # else:
-    #     return 'Content-Type not supported!'
     '''Route when image is uploaded, and user is expecting for result'''
     if 'files' not in request.files:
         flash('No file part')
