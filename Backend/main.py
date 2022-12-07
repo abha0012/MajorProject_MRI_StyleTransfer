@@ -48,12 +48,12 @@ def generate_images_T2(model1, test_input1,filename):
     '''Main function for T1 --> T2'''
     prediction1 = model1(test_input1)
     # prediction2 = model2(test_input2)
-    plt.figure(figsize=(4, 4))
-    display_list = [test_input1[0], prediction1[0]]
-    title = ['Input T1', 'Predicted T2 ']
-    for i in range(2):
-        plt.subplot(1, 2, i+1)
-        plt.title(title[i])
+    plt.figure(figsize=(20, 20))
+    display_list = [prediction1[0]]
+    # title = ['Predicted T2']
+    for i in range(1):
+        plt.subplot(1, 1, i+1)
+        # plt.title(title[i])
         plt.imshow(display_list[i].numpy()[:, :, 0], cmap='gray')
         plt.axis('off')
     save_results_to = ('D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/')
@@ -66,12 +66,12 @@ def generate_images_T1(model1, test_input1,filename):
     '''Main function for T2-->T1'''
     prediction1 = model1(test_input1)
     # prediction2 = model2(test_input2)
-    plt.figure(figsize=(4, 4))
-    display_list = [test_input1[0], prediction1[0]]
-    title = ['Input T1', 'Predicted T2 ']
-    for i in range(2):
-        plt.subplot(1, 2, i+1)
-        plt.title(title[i])
+    plt.figure(figsize=(20, 20))
+    display_list = [prediction1[0]]
+    # title = ['Input T1', 'Predicted T2 ']
+    for i in range(1):
+        plt.subplot(1, 1, i+1)
+        # plt.title(title[i])
         plt.imshow(display_list[i].numpy()[:, :, 0], cmap='gray')
         plt.axis('off')
     save_results_to = ('D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/')

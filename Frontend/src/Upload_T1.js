@@ -7,7 +7,7 @@ import Uploadicon from "./upload.png";
 import "./Upload.css";
 
 
-function Upload() 
+function Upload_T1() 
 {
   const [images, setImages] = React.useState(null);
   const [out_url, set_out_url] = React.useState(" ");
@@ -203,7 +203,8 @@ function Upload()
               </Col>
               <Col md={6} xl={6} lg={6} sm={12}>
                   <div className="single-feature-box">
-                  <img src={Uploadicon} alt="Uploadicon" marginBottom='20px'/>
+                    <img src={out_url} alt="" width="300" />
+                  {/* <img src={Uploadicon} alt="Uploadicon" marginBottom='20px'/>
                   <h4 style={{
                       color: "#2C2C2C",
                       height: "auto",
@@ -230,8 +231,8 @@ function Upload()
                       fontStretch: "normal",
                       marginRight: "0",
                       marginBottom: "26px"
-                  }}>{OR}</h3>
-                      <button
+                  }}>{OR}</h3> */}
+                  {/* <button
                     style={ { color: "white",height: "auto",
                     fontSize: "18px",
                     backgroundColor: "#00CFBD",
@@ -245,16 +246,16 @@ function Upload()
                     {...dragProps}
                   >
                     Upload a T2 image
-                  </button>
-                  {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="300" />
-                  <div className="image-item__btn-wrapper">
-                    <button onClick={() => onImageUpdate(index)}>Update</button>
-                    <button onClick={() => onImageRemove(index)}>Remove</button>
+                  </button> */}
+                  {/* {imageList.map((image, index) => (
+                  <div key={index} className="image-item">
+                    <img src={image.data_url} alt="" width="300" />
+                    <div className="image-item__btn-wrapper">
+                      <button onClick={() => onImageUpdate(index)}>Update</button>
+                      <button onClick={() => onImageRemove(index)}>Remove</button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                  ))}
                   <h5 style={{
                       color: "#2C2C2C",
                       height: "auto",
@@ -269,9 +270,9 @@ function Upload()
                       marginRight: "0",
                       marginBottom: "26px"
                   }}>{filetype}</h5>
-                  </div>
-                  <div>
-                  <button style={{ color: "white",height: "auto",
+                  </div> */}
+                  {/* <div>
+                    <button style={{ color: "white",height: "auto",
                         fontSize: "18px",
                         backgroundColor: "#00CFBD",
                         borderRadius: "10px",fontStyle: "Regular",
@@ -281,9 +282,10 @@ function Upload()
                         lineHeight: "normal",
                         fontStretch: "normal" }}
                     onClick={handle_T2} name="T2">Submit_T2</button>
+                  </div> */}
                 </div>
               </Col>
-            </Row>
+            </Row>            
           </Container>
           &nbsp;
           <button style={{ color: "white",height: "auto",
@@ -314,9 +316,6 @@ function Upload()
       {/* Container to display output      */}
       <Container>
               <Row>
-              <Col md={6} xl={12} lg={6} sm={12}>
-              <img src={out_url} alt="" width="300" />
-              </Col>
               </Row>
       </Container>
       </div>
@@ -325,4 +324,4 @@ function Upload()
 }
 
 
-export default Upload
+export default Upload_T1

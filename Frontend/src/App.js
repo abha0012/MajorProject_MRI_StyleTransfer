@@ -11,7 +11,8 @@ import Home from './Pages/Home/Home/Home.jsx';
 // import Login from './Pages/Login/Login';
 // import NotFound from './Pages/NotFound/NotFound';
 // import Service from './Pages/Services/Service/Service';
-import Upload from './Upload';
+import Upload from './Upload_T1';
+import Upload2 from './Upload_T2';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/upload' element={<Upload/>} />
+          <Route path='/upload2' element={<Upload2/>} />
           {/* <Route path='/dentist' element={<Dentist />} /> */}
           {/* <Route path='/contact' element={<Contact />} /> */}
           {/* <Route path='/approved' element={<Approved />} /> */}
