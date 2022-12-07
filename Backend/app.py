@@ -1,7 +1,8 @@
 '''Stores information about Flask App'''
 from flask import Flask
 from flask_cors import CORS
-UPLOAD_FOLDER = 'D:/Projects/MRIfix/Backend/Trial/static/uploads/'
+UPLOAD_FOLDER = 'D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/'
+
 
 app = Flask(__name__)
 CORS(app)

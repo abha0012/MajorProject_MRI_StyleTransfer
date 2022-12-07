@@ -17,15 +17,15 @@ def allowed_file(filename):
     '''To check if the uploaded file extension is in the list'''
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-T1_model = tf.keras.models.load_model('D:\Projects\MRIfix\Backend\Trial\T1_model')
-T2_model = tf.keras.models.load_model('D:\Projects\MRIfix\Backend\Trial\T2_model')
+T1_model = tf.keras.models.load_model('D:\Projects\MajorProject_MRI_StyleTransfer\Backend\T1_model')
+T2_model = tf.keras.models.load_model('D:\Projects\MajorProject_MRI_StyleTransfer\Backend\T2_model')
 # Setting input image sizes
 IMG_HEIGHT = 217
 IMG_WIDTH = 181
 # Setting default batch size
 BATCH_SIZE = 64
 # Defining the path for the data
-base_dir = pathlib.Path("D:/Projects/MRIfix/Backend/Trial/static")
+base_dir = pathlib.Path("D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static")
 os.chdir(base_dir)
 data_dir = pathlib.Path(str(base_dir) + '/uploads/')
 
@@ -44,8 +44,8 @@ resize_layer = tf.keras.layers.experimental.preprocessing.Resizing(128, 128, int
 #Reshape
 reshape_layer = tf.keras.layers.Reshape((128,128,1))
 
-def generate_images_T1(model1, test_input1,filename):
-    '''Main function for generating predicted MRI for T1'''
+def generate_images_T2(model1, test_input1,filename):
+    '''Main function for T1 --> T2'''
     prediction1 = model1(test_input1)
     # prediction2 = model2(test_input2)
     plt.figure(figsize=(4, 4))
@@ -56,11 +56,29 @@ def generate_images_T1(model1, test_input1,filename):
         plt.title(title[i])
         plt.imshow(display_list[i].numpy()[:, :, 0], cmap='gray')
         plt.axis('off')
-    save_results_to = ('D:/Projects/MRIfix/Backend/Trial/static/uploads/')
-    plt.savefig(save_results_to + 'Result_' + filename,  bbox_inches="tight", transparent="true")
+    save_results_to = ('D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/')
+    plt.savefig(save_results_to + 'Result_T2_' + filename,  bbox_inches="tight", transparent="true")
     # plt.show()
     print("\n")
-    return'Result_' + filename
+    return'Result_T2_' + filename
+
+def generate_images_T1(model1, test_input1,filename):
+    '''Main function for T2-->T1'''
+    prediction1 = model1(test_input1)
+    # prediction2 = model2(test_input2)
+    plt.figure(figsize=(4, 4))
+    display_list = [test_input1[0], prediction1[0]]
+    title = ['Input T1', 'Predicted T2 ']
+    for i in range(2):
+        plt.subplot(1, 2, i+1)
+        plt.title(title[i])
+        plt.imshow(display_list[i].numpy()[:, :, 0], cmap='gray')
+        plt.axis('off')
+    save_results_to = ('D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/')
+    plt.savefig(save_results_to + 'Result_T1_' + filename,  bbox_inches="tight", transparent="true")
+    # plt.show()
+    print("\n")
+    return'Result_T1_' + filename
 
 @app.route('/')
 def upload_form():
@@ -78,22 +96,31 @@ def upload_image():
         flash('No image selected for uploading')
         return "No image selected for uploading"
     if file and allowed_file(file.filename):
+        model = request.form.get('model')
+        print('model:',model)
         filename = secure_filename(file.filename)
         print("File present, name: ", filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        file_0 = load_image("D:/Projects/MRIfix/Backend/Trial/static/uploads/", filename)
+        file_0 = load_image("D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/", filename)
         #Normalizing the loaded file
-        images_T1_norm = normalization_layer(file_0)
+        images_norm = normalization_layer(file_0)
         # Resizing the normalized data
-        images_T1_resized =resize_layer(images_T1_norm)
+        images_resized =resize_layer(images_norm)
         #Reshape the resized data
-        images_T1_reshaped = reshape_layer(images_T1_resized[:,:,:,0])
-        a = generate_images_T1(T2_model, images_T1_reshaped, filename)
-        print(a)
-        path_a = 'D:/Projects/MRIfix/Backend/Trial/static/uploads/' + a
-
-        flash('Image successfully uploaded and displayed below...')
-        return a,path_a
+        images_reshaped = reshape_layer(images_resized[:,:,:,0])
+        if(model=='T2'):
+            a = generate_images_T2(T2_model, images_reshaped, filename)
+            print(a)
+            path_a = 'D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/' + a
+            flash('Image successfully uploaded and displayed below...')
+            return a,path_a
+        if(model=='T1'):
+            a = generate_images_T1(T1_model, images_reshaped, filename)
+            print(a)
+            path_a = 'D:/Projects/MajorProject_MRI_StyleTransfer/Backend/static/uploads/' + a
+            flash('Image successfully uploaded and displayed below...')
+            return a,path_a
+        
         # return render_template('upload.html', filename=a, path = path_a)
     flash('Allowed image types are -> png, jpg, jpeg, gif')
     return "Lol"

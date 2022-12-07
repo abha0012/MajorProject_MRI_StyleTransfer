@@ -33,10 +33,28 @@ function Upload()
 
   }}
    
-  const handlekaand = async () => {
+  const handle_T1 = async () => {
     console.log('images: ', images[0].file)
     const formData = new FormData();
-    formData.append('username', 'Chris');
+    formData.append('model', 'T2');
+    formData.append('files', images[0].file)
+    console.log("FORM DATA: ", formData);
+    // Request made to the backend api
+    // Send formData object
+    let data = await axios.post("http://127.0.0.1:5000/mri", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("DONE ")
+    console.log("data:", data.data)
+    set_out_url('http://localhost:5000/static/uploads/'+data.data)
+    return;
+  }
+  const handle_T2 = async () => {
+    console.log('images: ', images[0].file)
+    const formData = new FormData();
+    formData.append('model', 'T1');
     formData.append('files', images[0].file)
     console.log("FORM DATA: ", formData);
     // Request made to the backend api
@@ -170,6 +188,18 @@ function Upload()
                     marginBottom: "26px"
                 }}>{filetype}</h5>
                 </div>
+                <div>
+                  <button style={{ color: "white",height: "auto",
+                        fontSize: "18px",
+                        backgroundColor: "#00CFBD",
+                        borderRadius: "10px",fontStyle: "Regular",
+                        borderColor:"transparent",
+                        textAlign: "center",
+                        fontWeight: "400",
+                        lineHeight: "normal",
+                        fontStretch: "normal" }}
+                    onClick={handle_T1} name="T1">Submit_T1</button>
+                </div>
               </Col>
               <Col md={6} xl={6} lg={6} sm={12}>
                   <div className="single-feature-box">
@@ -240,6 +270,18 @@ function Upload()
                       marginBottom: "26px"
                   }}>{filetype}</h5>
                   </div>
+                  <div>
+                  <button style={{ color: "white",height: "auto",
+                        fontSize: "18px",
+                        backgroundColor: "#00CFBD",
+                        borderRadius: "10px",fontStyle: "Regular",
+                        borderColor:"transparent",
+                        textAlign: "center",
+                        fontWeight: "400",
+                        lineHeight: "normal",
+                        fontStretch: "normal" }}
+                    onClick={handle_T2} name="T2">Submit_T2</button>
+                </div>
               </Col>
             </Row>
           </Container>
@@ -267,18 +309,7 @@ function Upload()
         )}
       </ImageUploading>
 
-      <div>
-        <button style={{ color: "white",height: "auto",
-              fontSize: "18px",
-              backgroundColor: "#00CFBD",
-              borderRadius: "10px",fontStyle: "Regular",
-              borderColor:"transparent",
-              textAlign: "center",
-              fontWeight: "400",
-              lineHeight: "normal",
-              fontStretch: "normal" }}
-          onClick={handlekaand} name="kaand">Submit</button>
-      </div>
+
 
       {/* Container to display output      */}
       <Container>
